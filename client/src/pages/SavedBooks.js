@@ -1,11 +1,13 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { Jumbotron, Container, CardColumns, Card, Button } from 'react-bootstrap';
 
 import { useQuery, useMutation } from "@apollo/client";
 import { GET_ME } from "../utils/queries";
-import { REMOVE_BOOK } from "../utils/mutation";
+import { REMOVE_BOOK } from "../utils/mutations";
 import Auth from '../utils/auth';
 import { removeBookId } from '../utils/localStorage';
+
+
 
 const SavedBooks = () => {
   const { loading, data } = useQuery(GET_ME);
@@ -15,7 +17,7 @@ const SavedBooks = () => {
   if(!userData?.username) {
     return (
       <h4>
-        You must be logged in to interact this page. Use the links above to sign up or log in!
+        You need to be logged in to see this page. Use the navigation links above to sign up or log in!
       </h4>
     );
   }
@@ -72,7 +74,7 @@ const SavedBooks = () => {
                 <Card.Body>
                   <Card.Title>{book.title}</Card.Title>
                   <p className='small'>Authors: {book.authors}</p>
-                  {book.link ? <Card.Text><a href={book.link} target="_blank">More Information on Google Books</a></Card.Text> : null}
+                  {book.link ? <Card.Text><a href={book.link} target="_blank" rel="noreferrer">More Information on Google Books</a></Card.Text> : null}
                   <Card.Text>{book.description}</Card.Text>
                   <Button className='btn-block btn-danger' onClick={() => handleDeleteBook(book.bookId)}>
                     Delete this Book
